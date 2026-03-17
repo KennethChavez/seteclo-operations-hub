@@ -7,7 +7,7 @@
 @layer base {
   :root {
     /* SETECLO Modern Industrial Design System */
-    --background: 210 20% 98%;
+    --background: 220 14% 96%;
     --foreground: 220 13% 13%;
 
     --card: 0 0% 100%;
@@ -39,15 +39,15 @@
 
     --radius: 0.75rem;
 
-    /* Sidebar - Clean dark */
-    --sidebar-background: 220 16% 10%;
-    --sidebar-foreground: 220 10% 60%;
-    --sidebar-primary: 173 70% 45%;
+    /* Sidebar - Light/White */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 9% 46%;
+    --sidebar-primary: 25 93% 47%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 14% 15%;
-    --sidebar-accent-foreground: 0 0% 96%;
-    --sidebar-border: 220 14% 16%;
-    --sidebar-ring: 173 70% 37%;
+    --sidebar-accent: 220 14% 96%;
+    --sidebar-accent-foreground: 220 13% 13%;
+    --sidebar-border: 220 13% 93%;
+    --sidebar-ring: 25 93% 47%;
 
     /* Custom tokens */
     --warning: 38 92% 50%;
@@ -78,22 +78,18 @@
 @layer utilities {
   /* Modern card system */
   .card-modern {
-    @apply bg-card rounded-xl border border-border p-5;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
-  }
-
-  .card-modern:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    @apply bg-card rounded-2xl border border-border p-5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
   .card-modern-accent {
-    @apply bg-card rounded-xl border border-border border-l-[3px] border-l-secondary p-5;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+    @apply bg-card rounded-2xl border border-border border-l-[3px] border-l-secondary p-5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
   .card-modern-warning {
-    @apply bg-card rounded-xl border border-border border-l-[3px] border-l-primary p-5;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+    @apply bg-card rounded-2xl border border-border border-l-[3px] border-l-primary p-5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
   /* Legacy aliases */
@@ -106,32 +102,20 @@
     @apply inline-flex items-center px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider rounded-full;
   }
 
-  .status-operativo {
-    @apply status-badge bg-secondary/10 text-secondary;
-  }
+  .status-operativo { @apply status-badge bg-secondary/10 text-secondary; }
+  .status-taller { @apply status-badge bg-primary/10 text-primary; }
+  .status-disponible { @apply status-badge bg-muted text-muted-foreground; }
+  .status-pendiente { @apply status-badge bg-amber-50 text-amber-600; }
+  .status-completado { @apply status-badge bg-emerald-50 text-emerald-600; }
+  .status-progreso { @apply status-badge bg-blue-50 text-blue-600; }
+  .status-critico { @apply status-badge bg-destructive/10 text-destructive; }
 
-  .status-taller {
-    @apply status-badge bg-primary/10 text-primary;
+  /* Progress bar */
+  .progress-bar {
+    @apply h-2 rounded-full bg-muted overflow-hidden;
   }
-
-  .status-disponible {
-    @apply status-badge bg-muted text-muted-foreground;
-  }
-
-  .status-pendiente {
-    @apply status-badge bg-warning/10 text-yellow-700;
-  }
-
-  .status-completado {
-    @apply status-badge bg-success/10 text-green-700;
-  }
-
-  .status-progreso {
-    @apply status-badge bg-blue-500/10 text-blue-600;
-  }
-
-  .status-critico {
-    @apply status-badge bg-destructive/10 text-destructive;
+  .progress-bar-fill {
+    @apply h-full rounded-full transition-all duration-500;
   }
 
   /* Scrollbar */
