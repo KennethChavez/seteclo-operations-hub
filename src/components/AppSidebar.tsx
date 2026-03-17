@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, Users, Package, Truck, ClipboardList,
-  FileText, Settings, LogOut, Bell, MessageSquare, ChevronDown,
+  FileText, Settings, LogOut, ChevronDown, Receipt,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
