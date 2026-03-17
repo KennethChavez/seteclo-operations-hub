@@ -11,6 +11,7 @@ import Clientes from "@/pages/Clientes";
 import Inventario from "@/pages/Inventario";
 import Flota from "@/pages/Flota";
 import OrdenesTrabajoPage from "@/pages/OrdenesTrabajoPage";
+import Cotizaciones from "@/pages/Cotizaciones";
 import Facturacion from "@/pages/Facturacion";
 import Configuracion from "@/pages/Configuracion";
 import NotFound from "@/pages/NotFound";
