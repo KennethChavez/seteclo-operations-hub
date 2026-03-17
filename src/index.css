@@ -1,96 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* SETECLO Industrial Design System */
+    --background: 200 14% 98%;
+    --foreground: 210 11% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 210 11% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 210 11% 11%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Safety Orange - Primary Actions */
+    --primary: 25 93% 47%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Industrial Teal - Success/Technical */
+    --secondary: 173 70% 37%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 173 70% 37%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 25 93% 47%;
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    /* Sidebar - Dark Charcoal */
+    --sidebar-background: 210 11% 11%;
+    --sidebar-foreground: 210 20% 80%;
+    --sidebar-primary: 173 70% 37%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 210 11% 16%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 210 11% 20%;
+    --sidebar-ring: 173 70% 37%;
+
+    /* Custom tokens */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --success: 173 70% 37%;
+    --success-foreground: 0 0% 100%;
+    --steel: 215 16% 47%;
+
+    /* Industrial shadows */
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.1);
+    --shadow-md: 0 1px 2px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-lg: 0 4px 6px rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.08);
   }
 }
 
@@ -100,6 +69,65 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* Tabular numbers for data */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  .industrial-card {
+    @apply bg-card border border-border p-4;
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius);
+  }
+
+  .industrial-card-accent {
+    @apply bg-card border border-border border-l-4 border-l-secondary p-4;
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius);
+  }
+
+  .industrial-card-warning {
+    @apply bg-card border border-border border-l-4 border-l-primary p-4;
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius);
+  }
+
+  .status-badge {
+    @apply inline-flex items-center px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-sm;
+  }
+
+  .status-operativo {
+    @apply status-badge bg-secondary/10 text-secondary;
+  }
+
+  .status-taller {
+    @apply status-badge bg-primary/10 text-primary;
+  }
+
+  .status-disponible {
+    @apply status-badge bg-muted text-muted-foreground;
+  }
+
+  .status-pendiente {
+    @apply status-badge bg-warning/10 text-yellow-700;
+  }
+
+  .status-completado {
+    @apply status-badge bg-secondary/10 text-secondary;
+  }
+
+  .status-progreso {
+    @apply status-badge bg-blue-500/10 text-blue-700;
+  }
+
+  .status-critico {
+    @apply status-badge bg-destructive/10 text-destructive;
   }
 }
