@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Plus, Search, Truck, Wrench } from "lucide-react";
+import { Plus, Truck } from "lucide-react";
 
 const EQUIPMENT = [
   { id: 1, name: "Toyota 7FGU25", type: "Montacargas", serial: "7FGU25-60234", capacity: "2.5 Ton", fuel: "GLP", status: "renta", location: "DIUNSA - Bodega 3, SPS", nextMaint: "2026-04-01" },
@@ -30,24 +30,24 @@ export default function Flota() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Flota & Maquinaria</h1>
+          <h1 className="text-2xl font-bold text-foreground">Flota & Maquinaria</h1>
           <p className="text-sm text-muted-foreground">{EQUIPMENT.length} equipos registrados</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-bold text-xs uppercase tracking-wider rounded hover:opacity-90 transition-all duration-150">
+        <button className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground font-semibold text-xs rounded-lg hover:opacity-90 transition-all duration-200 shadow-sm">
           <Plus className="h-4 w-4" /> Nuevo Equipo
         </button>
       </div>
 
-      {/* Summary */}
+      {/* Summary pills */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: "En Renta", count: EQUIPMENT.filter(e => e.status === "renta").length, cls: "text-secondary" },
-          { label: "En Taller", count: EQUIPMENT.filter(e => e.status === "taller").length, cls: "text-primary" },
-          { label: "Operativo", count: EQUIPMENT.filter(e => e.status === "operativo").length, cls: "text-secondary" },
-          { label: "Disponible", count: EQUIPMENT.filter(e => e.status === "disponible").length, cls: "text-muted-foreground" },
+          { label: "En Renta", count: EQUIPMENT.filter(e => e.status === "renta").length, cls: "text-secondary", bg: "bg-secondary/10" },
+          { label: "En Taller", count: EQUIPMENT.filter(e => e.status === "taller").length, cls: "text-primary", bg: "bg-primary/10" },
+          { label: "Operativo", count: EQUIPMENT.filter(e => e.status === "operativo").length, cls: "text-green-600", bg: "bg-success/10" },
+          { label: "Disponible", count: EQUIPMENT.filter(e => e.status === "disponible").length, cls: "text-muted-foreground", bg: "bg-muted" },
         ].map((s) => (
-          <div key={s.label} className="industrial-card text-center">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{s.label}</p>
+          <div key={s.label} className="card-modern text-center">
+            <p className="text-xs font-medium text-muted-foreground mb-1">{s.label}</p>
             <p className={`text-2xl font-bold tabular-nums ${s.cls}`}>{s.count}</p>
           </div>
         ))}
@@ -57,25 +57,30 @@ export default function Flota() {
         {EQUIPMENT.map((eq, i) => (
           <motion.div
             key={eq.id}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.03, duration: 0.15 }}
+            transition={{ delay: i * 0.04, duration: 0.3 }}
             whileHover={{ y: -2 }}
-            className="industrial-card-accent cursor-pointer"
+            className="card-modern cursor-pointer group"
           >
-            <div className="flex items-start justify-between mb-2">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{eq.type}</p>
-                <h3 className="text-base font-bold">{eq.name}</h3>
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-muted flex items-center justify-center">
+                  <Truck className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-foreground group-hover:text-secondary transition-colors">{eq.name}</h3>
+                  <p className="text-[10px] font-medium text-muted-foreground">{eq.type}</p>
+                </div>
               </div>
               <span className={statusMap[eq.status]}>{statusLabel[eq.status]}</span>
             </div>
-            <div className="space-y-1 text-xs text-muted-foreground mt-3">
-              <p><span className="font-semibold text-foreground">Serial:</span> <span className="font-mono">{eq.serial}</span></p>
-              <p><span className="font-semibold text-foreground">Capacidad:</span> {eq.capacity} · {eq.fuel}</p>
-              <p><span className="font-semibold text-foreground">Ubicación:</span> {eq.location}</p>
+            <div className="space-y-1.5 text-xs text-muted-foreground pl-[52px]">
+              <p><span className="font-medium text-foreground">Serial:</span> <span className="font-mono">{eq.serial}</span></p>
+              <p><span className="font-medium text-foreground">Capacidad:</span> {eq.capacity} · {eq.fuel}</p>
+              <p><span className="font-medium text-foreground">Ubicación:</span> {eq.location}</p>
               {eq.nextMaint !== "—" && (
-                <p><span className="font-semibold text-foreground">Próx. Mant.:</span> {eq.nextMaint}</p>
+                <p><span className="font-medium text-foreground">Próx. Mant.:</span> {eq.nextMaint}</p>
               )}
             </div>
           </motion.div>
