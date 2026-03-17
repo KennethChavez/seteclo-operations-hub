@@ -12,6 +12,7 @@ const NAV_MAIN = [
   { label: "Inventario", icon: Package, path: "/inventario", module: "inventario" },
   { label: "Flota", icon: Truck, path: "/flota", module: "flota" },
   { label: "Órdenes", icon: ClipboardList, path: "/ordenes", module: "ordenes" },
+  { label: "Cotizaciones", icon: Receipt, path: "/cotizaciones", module: "cotizaciones" },
   { label: "Facturación", icon: FileText, path: "/facturacion", module: "facturacion" },
 ];
 

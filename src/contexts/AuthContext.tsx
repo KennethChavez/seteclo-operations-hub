@@ -42,8 +42,8 @@ const MOCK_USERS: Record<string, User & { password: string }> = {
 };
 
 const ROLE_MODULES: Record<UserRole, string[]> = {
-  superadmin: ["dashboard", "clientes", "inventario", "flota", "ordenes", "facturacion", "configuracion", "reportes"],
-  admin: ["dashboard", "clientes", "inventario", "flota", "ordenes", "facturacion", "reportes"],
+  superadmin: ["dashboard", "clientes", "inventario", "flota", "ordenes", "cotizaciones", "facturacion", "configuracion", "reportes"],
+  admin: ["dashboard", "clientes", "inventario", "flota", "ordenes", "cotizaciones", "facturacion", "reportes"],
   comercial: ["dashboard", "clientes", "ordenes", "flota", "cotizaciones"],
   tecnico: ["ordenes", "flota"],
   motorista: ["ordenes"],

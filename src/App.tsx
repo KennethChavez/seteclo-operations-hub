@@ -36,6 +36,7 @@ function AppRoutes() {
         <Route path="/inventario" element={<Inventario />} />
         <Route path="/flota" element={<Flota />} />
         <Route path="/ordenes" element={<OrdenesTrabajoPage />} />
+        <Route path="/cotizaciones" element={<Cotizaciones />} />
         <Route path="/facturacion" element={<Facturacion />} />
         <Route path="/configuracion" element={<Configuracion />} />
       </Route>
