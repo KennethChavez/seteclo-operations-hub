@@ -225,11 +225,3 @@ function TecnicoDashboard() {
     </div>
   );
 }
-
-const RECENT_ORDERS = [
-  { id: "OT-2026-102", client: "DIUNSA", equipment: "Hyster H50XT", tech: "Maynor", status: "progreso" },
-  { id: "OT-2026-101", client: "Lady Lee", equipment: "Toyota 7FGU25", tech: "Aaron", status: "pendiente" },
-  { id: "OT-2026-100", client: "Cargill", equipment: "Yale GDP080", tech: "Edwin", status: "completado" },
-  { id: "OT-2026-099", client: "DIUNSA", equipment: "Toyota 8FGU30", tech: "Maynor", status: "progreso" },
-  { id: "OT-2026-098", client: "Lacthosa", equipment: "Hyster H40XT", tech: "Julio", status: "completado" },
-];
