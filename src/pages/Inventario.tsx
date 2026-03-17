@@ -21,35 +21,33 @@ export default function Inventario() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Inventario</h1>
+          <h1 className="text-2xl font-bold text-foreground">Inventario</h1>
           <p className="text-sm text-muted-foreground">
-            {INVENTORY.length} items · {critical > 0 && (
-              <span className="text-destructive font-semibold">{critical} bajo stock mínimo</span>
+            {INVENTORY.length} items {critical > 0 && (
+              <span className="text-destructive font-semibold">· {critical} bajo stock mínimo</span>
             )}
           </p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-bold text-xs uppercase tracking-wider rounded hover:opacity-90 transition-all duration-150">
+        <button className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground font-semibold text-xs rounded-lg hover:opacity-90 transition-all duration-200 shadow-sm">
           <Plus className="h-4 w-4" /> Nuevo Repuesto
         </button>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="relative w-80">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Buscar por SKU o nombre..."
-            className="w-full pl-10 pr-4 py-2 bg-muted border border-border rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-150"
-          />
-        </div>
+      <div className="relative w-80">
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/60" />
+        <input
+          type="text"
+          placeholder="Buscar por SKU o nombre..."
+          className="w-full pl-11 pr-4 py-2.5 bg-muted/50 border border-transparent rounded-xl text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:bg-card focus:border-border focus:ring-2 focus:ring-primary/10 transition-all duration-200"
+        />
       </div>
 
-      <div className="industrial-card overflow-x-auto">
+      <div className="card-modern overflow-x-auto p-0">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border">
+            <tr className="border-b border-border bg-muted/30">
               {["SKU", "Repuesto", "Categoría", "Stock", "Mín", "Costo Unit.", "Proveedor"].map((h) => (
-                <th key={h} className="text-left py-2.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{h}</th>
+                <th key={h} className="text-left py-3 px-5 text-[11px] font-medium text-muted-foreground first:rounded-tl-xl last:rounded-tr-xl">{h}</th>
               ))}
             </tr>
           </thead>
@@ -62,20 +60,20 @@ export default function Inventario() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.02 }}
-                  className={`border-b border-border last:border-0 hover:bg-muted/50 transition-colors duration-150 ${isLow ? "bg-destructive/5" : ""}`}
+                  className={`border-b border-border/50 last:border-0 hover:bg-muted/30 transition-colors cursor-pointer ${isLow ? "bg-destructive/[0.03]" : ""}`}
                 >
-                  <td className="py-2.5 font-mono text-xs font-semibold">{item.sku}</td>
-                  <td className="py-2.5 font-medium">
+                  <td className="py-3 px-5 font-mono text-xs font-semibold text-foreground">{item.sku}</td>
+                  <td className="py-3 px-5 font-medium text-foreground">
                     <div className="flex items-center gap-2">
                       {isLow && <AlertTriangle className="h-3.5 w-3.5 text-destructive" />}
                       {item.name}
                     </div>
                   </td>
-                  <td className="py-2.5 text-muted-foreground">{item.category}</td>
-                  <td className={`py-2.5 font-bold tabular-nums ${isLow ? "text-destructive" : ""}`}>{item.stock}</td>
-                  <td className="py-2.5 tabular-nums text-muted-foreground">{item.min}</td>
-                  <td className="py-2.5 tabular-nums">{item.cost}</td>
-                  <td className="py-2.5 text-muted-foreground text-xs">{item.supplier}</td>
+                  <td className="py-3 px-5 text-muted-foreground">{item.category}</td>
+                  <td className={`py-3 px-5 font-bold tabular-nums ${isLow ? "text-destructive" : "text-foreground"}`}>{item.stock}</td>
+                  <td className="py-3 px-5 tabular-nums text-muted-foreground">{item.min}</td>
+                  <td className="py-3 px-5 tabular-nums text-foreground">{item.cost}</td>
+                  <td className="py-3 px-5 text-muted-foreground text-xs">{item.supplier}</td>
                 </motion.tr>
               );
             })}

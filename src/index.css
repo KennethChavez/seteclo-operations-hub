@@ -6,15 +6,15 @@
 
 @layer base {
   :root {
-    /* SETECLO Industrial Design System */
-    --background: 200 14% 98%;
-    --foreground: 210 11% 11%;
+    /* SETECLO Modern Industrial Design System */
+    --background: 210 20% 98%;
+    --foreground: 220 13% 13%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 11% 11%;
+    --card-foreground: 220 13% 13%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 11% 11%;
+    --popover-foreground: 220 13% 13%;
 
     /* Safety Orange - Primary Actions */
     --primary: 25 93% 47%;
@@ -24,42 +24,38 @@
     --secondary: 173 70% 37%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 173 70% 37%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 220 13% 13%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
     --ring: 25 93% 47%;
 
-    --radius: 0.25rem;
+    --radius: 0.75rem;
 
-    /* Sidebar - Dark Charcoal */
-    --sidebar-background: 210 11% 11%;
-    --sidebar-foreground: 210 20% 80%;
-    --sidebar-primary: 173 70% 37%;
+    /* Sidebar - Clean dark */
+    --sidebar-background: 220 16% 10%;
+    --sidebar-foreground: 220 10% 60%;
+    --sidebar-primary: 173 70% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 11% 16%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 210 11% 20%;
+    --sidebar-accent: 220 14% 15%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 220 14% 16%;
     --sidebar-ring: 173 70% 37%;
 
     /* Custom tokens */
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
-    --success: 173 70% 37%;
+    --success: 152 60% 45%;
     --success-foreground: 0 0% 100%;
-    --steel: 215 16% 47%;
-
-    /* Industrial shadows */
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.1);
-    --shadow-md: 0 1px 2px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.05);
-    --shadow-lg: 0 4px 6px rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.08);
+    --steel: 220 9% 46%;
+    --info: 217 91% 60%;
   }
 }
 
@@ -74,33 +70,40 @@
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
 
-  /* Tabular numbers for data */
   .tabular-nums {
     font-variant-numeric: tabular-nums;
   }
 }
 
 @layer utilities {
-  .industrial-card {
-    @apply bg-card border border-border p-4;
-    box-shadow: var(--shadow-sm);
-    border-radius: var(--radius);
+  /* Modern card system */
+  .card-modern {
+    @apply bg-card rounded-xl border border-border p-5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
   }
 
-  .industrial-card-accent {
-    @apply bg-card border border-border border-l-4 border-l-secondary p-4;
-    box-shadow: var(--shadow-sm);
-    border-radius: var(--radius);
+  .card-modern:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
   }
 
-  .industrial-card-warning {
-    @apply bg-card border border-border border-l-4 border-l-primary p-4;
-    box-shadow: var(--shadow-sm);
-    border-radius: var(--radius);
+  .card-modern-accent {
+    @apply bg-card rounded-xl border border-border border-l-[3px] border-l-secondary p-5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
   }
 
+  .card-modern-warning {
+    @apply bg-card rounded-xl border border-border border-l-[3px] border-l-primary p-5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  }
+
+  /* Legacy aliases */
+  .industrial-card { @apply card-modern; }
+  .industrial-card-accent { @apply card-modern-accent; }
+  .industrial-card-warning { @apply card-modern-warning; }
+
+  /* Status badges - pill style */
   .status-badge {
-    @apply inline-flex items-center px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-sm;
+    @apply inline-flex items-center px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider rounded-full;
   }
 
   .status-operativo {
@@ -120,14 +123,19 @@
   }
 
   .status-completado {
-    @apply status-badge bg-secondary/10 text-secondary;
+    @apply status-badge bg-success/10 text-green-700;
   }
 
   .status-progreso {
-    @apply status-badge bg-blue-500/10 text-blue-700;
+    @apply status-badge bg-blue-500/10 text-blue-600;
   }
 
   .status-critico {
     @apply status-badge bg-destructive/10 text-destructive;
   }
+
+  /* Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { @apply bg-border rounded-full; }
 }
