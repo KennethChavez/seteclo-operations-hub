@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, Users, Package, Truck, ClipboardList,
-  FileText, Settings, LogOut, Bell, MessageSquare, ChevronDown,
+  FileText, Settings, LogOut, ChevronDown, Receipt,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -12,6 +12,7 @@ const NAV_MAIN = [
   { label: "Inventario", icon: Package, path: "/inventario", module: "inventario" },
   { label: "Flota", icon: Truck, path: "/flota", module: "flota" },
   { label: "Órdenes", icon: ClipboardList, path: "/ordenes", module: "ordenes" },
+  { label: "Cotizaciones", icon: Receipt, path: "/cotizaciones", module: "cotizaciones" },
   { label: "Facturación", icon: FileText, path: "/facturacion", module: "facturacion" },
 ];
 
