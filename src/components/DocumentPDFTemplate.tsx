@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { FileDown, Printer, X, Loader2 } from "lucide-react";
 import setecloLogo from "@/assets/seteclo-logo.png";
 
 export interface DocumentItem {
@@ -38,29 +39,69 @@ interface Props {
 
 export default function DocumentPDFTemplate({ data, onClose }: Props) {
   const printRef = useRef<HTMLDivElement>(null);
+  const [exporting, setExporting] = useState(false);
 
-  const handlePrint = () => {
+  const generatePDF = async () => {
     const content = printRef.current;
-    if (!content) return;
-    const win = window.open("", "_blank");
-    if (!win) return;
-    win.document.write(`
-      <!DOCTYPE html>
-      <html><head><title>${data.type === "cotizacion" ? "Cotización" : "Factura"} ${data.number}</title>
-      <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; color: #1a1a2e; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        @media print { body { padding: 0; } }
-      </style>
-      </head><body>${content.innerHTML}</body></html>
-    `);
-    win.document.close();
-    setTimeout(() => { win.print(); win.close(); }, 400);
+    if (!content) return null;
+
+    const html2canvas = (await import("html2canvas")).default;
+    const { jsPDF } = await import("jspdf");
+
+    const canvas = await html2canvas(content, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      logging: false,
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "letter");
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const imgWidth = pageWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft > 0) {
+      position = -(imgHeight - heightLeft);
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    return pdf;
   };
 
-  const handleExportPDF = () => {
-    handlePrint(); // Uses browser print → Save as PDF
+  const handleExportPDF = async () => {
+    setExporting(true);
+    try {
+      const pdf = await generatePDF();
+      if (pdf) {
+        const fileName = `${data.type === "cotizacion" ? "Cotizacion" : "Factura"}_${data.number}.pdf`;
+        pdf.save(fileName);
+      }
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const handlePrint = async () => {
+    setExporting(true);
+    try {
+      const pdf = await generatePDF();
+      if (pdf) {
+        const blobUrl = pdf.output("bloburl");
+        window.open(blobUrl as unknown as string, "_blank");
+      }
+    } finally {
+      setExporting(false);
+    }
   };
 
   const typeLabel = data.type === "cotizacion" ? "COTIZACIÓN" : "FACTURA";
@@ -73,15 +114,25 @@ export default function DocumentPDFTemplate({ data, onClose }: Props) {
         <div className="flex items-center justify-between px-6 py-4 border-b border-border sticky top-0 bg-card rounded-t-2xl z-10">
           <h2 className="text-sm font-semibold text-foreground">Vista Previa — {typeLabel} {data.number}</h2>
           <div className="flex gap-2">
-            <button onClick={handleExportPDF} className="px-4 py-2 text-xs font-semibold bg-secondary text-secondary-foreground rounded-lg hover:opacity-90 transition-all">
+            <button
+              onClick={handleExportPDF}
+              disabled={exporting}
+              className="flex items-center gap-2 px-4 py-2 text-xs font-semibold bg-secondary text-secondary-foreground rounded-lg hover:opacity-90 transition-all disabled:opacity-50"
+            >
+              {exporting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <FileDown className="h-3.5 w-3.5" />}
               Exportar PDF
             </button>
-            <button onClick={handlePrint} className="px-4 py-2 text-xs font-semibold bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-all">
+            <button
+              onClick={handlePrint}
+              disabled={exporting}
+              className="flex items-center gap-2 px-4 py-2 text-xs font-semibold bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-all disabled:opacity-50"
+            >
+              {exporting ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Printer className="h-3.5 w-3.5" />}
               Imprimir
             </button>
             {onClose && (
-              <button onClick={onClose} className="px-4 py-2 text-xs font-semibold border border-border rounded-lg hover:bg-muted transition-all text-foreground">
-                Cerrar
+              <button onClick={onClose} className="p-2 rounded-lg border border-border hover:bg-muted transition-all text-foreground">
+                <X className="h-4 w-4" />
               </button>
             )}
           </div>
@@ -89,11 +140,11 @@ export default function DocumentPDFTemplate({ data, onClose }: Props) {
 
         {/* PDF Content */}
         <div ref={printRef}>
-          <div style={{ maxWidth: 800, margin: "0 auto", padding: "40px 48px", fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#1a1a2e" }}>
+          <div style={{ maxWidth: 800, margin: "0 auto", padding: "40px 48px", fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#1a1a2e", background: "#ffffff" }}>
             {/* Header */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 32 }}>
               <div>
-                <img src={setecloLogo} alt="SETECLO" style={{ height: 40, marginBottom: 8 }} />
+                <img src={setecloLogo} alt="SETECLO" style={{ height: 40, marginBottom: 8 }} crossOrigin="anonymous" />
                 <p style={{ fontSize: 10, color: "#6b7280", lineHeight: 1.6 }}>
                   Servicios Técnicos Logísticos<br />
                   San Pedro Sula, Honduras<br />
@@ -120,7 +171,7 @@ export default function DocumentPDFTemplate({ data, onClose }: Props) {
               <p style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: 1.5, color: "#6b7280", marginBottom: 8 }}>Facturar a</p>
               <p style={{ fontSize: 15, fontWeight: 700 }}>{data.client.name}</p>
               <p style={{ fontSize: 11, color: "#6b7280", marginTop: 4 }}>
-                RTN: {data.client.rtn} · {data.client.phone}<br />
+                RTN: {data.client.rtn}{data.client.phone ? ` · ${data.client.phone}` : ""}<br />
                 {data.client.address}<br />
                 Atención: {data.client.contact}
               </p>
